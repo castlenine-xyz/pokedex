@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func callbackHelp(cfg *config) error {
+func callbackHelp(cfg *config, args ...string) error {
 	fmt.Println("")
 	fmt.Println("Welcome to help hell, we don't know either")
 	fmt.Printf("heres the manual: \n\n")

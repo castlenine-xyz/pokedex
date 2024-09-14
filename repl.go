@@ -20,6 +20,11 @@ func startRepl(cfg *config) {
 
 		//clean text from cli
 		cleaned := cleanInput(text)
+		args := []string{}
+		if len(cleaned) > 1 {
+			args = cleaned[1:]
+		}
+		// hit enter condition make a new line
 		if len(cleaned) == 0 {
 			continue
 		}
@@ -33,7 +38,7 @@ func startRepl(cfg *config) {
 			fmt.Printf("Invald command: %s\n", commandName)
 			continue
 		}
-		err := command.callback(cfg)
+		err := command.callback(cfg, args...)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -44,7 +49,7 @@ func startRepl(cfg *config) {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, ...string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -63,6 +68,16 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "page back through location list",
 			callback:    callbackMapb,
+		},
+		"explore": {
+			name:        "explore {location_area}",
+			description: "lists pokemon in a location area",
+			callback:    callbackExplore,
+		},
+		"catch": {
+			name:        "catch {pokemon}",
+			description: "trys to catch a specifed pokemon and add it to your pokedex",
+			callback:    callbackCatch,
 		},
 		"exit": {
 			name:        "exit",
