@@ -1,6 +1,10 @@
 package main
 
-import "github.com/castlenine-xyz/pokedex/internal/pokeapi"
+import (
+	"time"
+
+	"github.com/castlenine-xyz/pokedex/internal/pokeapi"
+)
 
 // "fmt"
 
@@ -13,7 +17,7 @@ type config struct {
 
 func main() {
 	cfg := config{
-		pokeapiClient: pokeapi.NewClient(),
+		pokeapiClient: pokeapi.NewClient(time.Hour),
 	}
 	startRepl(&cfg)
 }
